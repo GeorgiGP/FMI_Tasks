@@ -1,5 +1,5 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/QED1D2-_)
-# Домашно № 1
+# Домашно № 1 (Декември 2023)
 
 [Условия на задачите](https://docs.google.com/document/d/12qoPiZKLn-8cXD6OKMNDj4j9zF6_bLck/edit)
 
