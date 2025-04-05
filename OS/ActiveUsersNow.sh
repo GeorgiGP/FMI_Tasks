@@ -1,0 +1,7 @@
+#!/bin/bash
+
+join -t ' ' -1 1 -2 1 -o 2.2 2.3 1.2 1.3 \
+<(who | tr -s ' ' | cut -d ' ' -f 1,3,4 | sort | uniq -w 10) \
+<(cat /etc/passwd | tr ':' ' ' | cut -d ',' -f 1 | cut -d ' ' -f 1,5,6 | sort) | \
+sort -t ' ' -k 3,4 | \
+column -t -N Name,LastName,TimeLogged
