@@ -5,7 +5,7 @@ if [[ $# -lt 1 ]]; then
     exit 2
 fi
 
-if [[ -z $(cat /etc/passwd | cut -d ':' -f 1 | egrep "$1") ]];then
+if [[ -z $(cat /etc/passwd | cut -d ':' -f 1 | egrep "$1") ]]; then
     echo "This user does not exist!"
     exit 3
 fi
