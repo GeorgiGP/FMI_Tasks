@@ -3,7 +3,7 @@
 set -e
 
 if [[ $# -lt 2 ]]; then
-    echo "2 args!"
+    echo "2 args!" >&2
     exit 3
 fi
 
@@ -24,9 +24,9 @@ done
 after=$(date +%s.%N)
 
 time=$(echo "$after - $now" | bc -l)
-
-echo "Time: $time"
+roundedTime=$(echo "$time" | awk '{ printf("%.2f", $1) }')
+echo "Time: $roundedTime"
 echo "Script called: $cnt"
 
-avg=$(echo "$time/$cnt" | bc -l)
+avg=$(echo "$time/$cnt" | bc -l | awk '{ printf("%.2f", $1) }')
 echo "Avg per call: $avg"
