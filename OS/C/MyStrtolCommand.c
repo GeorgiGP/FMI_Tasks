@@ -9,7 +9,14 @@ int main(int argc, char** argv) {
     }
 
     char* msg;
-    char* num = argv[1];
+
+    char num[128] = "";
+    for (int i = 1; i < argc; ++i) {
+        strcat(num, argv[i]);
+        strcat(num, " ");
+    }
+    num[strlen(num) - 1] = '\0';
+
     long res = strtol(num, &msg, 10);
     if (msg == num) {
         char ex[128];
