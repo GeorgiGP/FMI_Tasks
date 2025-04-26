@@ -4,8 +4,9 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#include <stdint.h>
 int compare(const void* lhs,const void* rhs) {
-    return *(const char*)lhs - *(const char*)rhs;
+    return *(const uint8_t*)lhs - *(const uint8_t*)rhs;
 }
 
 int main(int argc, char* argv[]) {
@@ -22,7 +23,9 @@ int main(int argc, char* argv[]) {
         err(3, "Couldnt stat file %s\n", fName);
     }
     int size = info.st_size;
-    char* fileContent = malloc( size );
+    printf("%d\n", size);
+
+    uint8_t* fileContent = malloc( size );
 
     int readBytes = read(fd, fileContent, size);
     close(fd);
@@ -30,8 +33,7 @@ int main(int argc, char* argv[]) {
         err(4, "Couldnt read the whole file!");
     }
 
-    qsort(fileContent, size, sizeof(char), compare);
-
+    qsort(fileContent, size, sizeof(uint8_t), compare);
 
     if ( ( fd = open(fName, O_CREAT | O_WRONLY | O_TRUNC) ) < 0) {
         err(6, "Couldnt open %s!", fName);
