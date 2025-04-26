@@ -5,6 +5,7 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 int compare(const void* lhs,const void* rhs) {
     return *(const uint8_t*)lhs - *(const uint8_t*)rhs;
 }
@@ -22,12 +23,17 @@ int main(int argc, char* argv[]) {
     if( ( stat(fName, &info) ) < 0) {
         err(3, "Couldnt stat file %s\n", fName);
     }
-    int size = info.st_size;
-    printf("%d\n", size);
-
+    long size = info.st_size;
+    if( size == 0 ) {
+        const char msg[] = "Size is 0\n";
+        write(1, msg, strlen(msg));
+        exit(0);
+    }
     uint8_t* fileContent = malloc( size );
-
-    int readBytes = read(fd, fileContent, size);
+    if (fileContent == NULL) {
+        err(7, "Couldn't malloc %ld memory!\n", size);
+    }
+    long readBytes = read(fd, fileContent, size);
     close(fd);
     if (readBytes != size) {
         err(4, "Couldnt read the whole file!");
@@ -39,7 +45,7 @@ int main(int argc, char* argv[]) {
         err(6, "Couldnt open %s!", fName);
     }
 
-    int written = write(fd, fileContent, size);
+    long written = write(fd, fileContent, size);
     if (written != size) {
         err(5, "Couldnt write all bytes in the file!");
     }
