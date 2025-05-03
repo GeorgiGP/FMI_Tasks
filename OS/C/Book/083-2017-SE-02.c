@@ -57,6 +57,7 @@ int main(int argc, char* argv[]) {
                 err(5, "Cannot open %s for reading!\n", argv[i]);
             }
             cat(fd, &startLine, &counter);
+            close(fd);
         }
     }
 }
