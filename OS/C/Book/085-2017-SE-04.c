@@ -45,6 +45,7 @@ int main(int argc, char* argv[]) {
         } else {
             int fd = openFDRead(argv[i]);
             cat(fd);
+            close(fd);
         }
     }
 }
