@@ -80,4 +80,7 @@ int main(int argc, char* argv[]) {
     if ( bytes < 0 ) {
         err(7, "Cannot read position arg from %s!\n", argv[1]);
     }
+    close(f1);
+    close(f2);
+    close(fW);
 }
