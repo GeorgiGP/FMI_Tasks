@@ -5,6 +5,7 @@
 #include <err.h>
 #include <stdint.h>
 
+
 void writefd(int fd, const void* content, long size) {
     int res = write(fd, content, size);
     if ( res < 0) {
@@ -46,6 +47,7 @@ void mylseek(int fd, long pos, int mode) {
         err(6, "Couldnt lseek at position!\n");
     }
 }
+
 
 struct header_t {
     uint16_t magic;
@@ -99,12 +101,13 @@ int main(int argc, char* argv[]) {
             errx(13, "Logic error, this position goes out of allowed elements for the result!\n");
         }
 
-        lseek(fdData, sizeof(struct header_t) + sizeof(uint32_t) * pos.first, SEEK_SET);
+        mylseek(fdData, sizeof(struct header_t) + sizeof(uint32_t) * pos.first, SEEK_SET);
         uint32_t toMove;
         readStrict(fdData, &toMove, sizeof(toMove));
         printf("%x toMove data!\n", toMove);
-        lseek(fdW, sizeof(struct header_t) + sizeof(uint64_t) * pos.second, SEEK_SET);
+        mylseek(fdW, sizeof(struct header_t) + sizeof(uint64_t) * pos.second, SEEK_SET);
         uint64_t toMoveBig = (uint64_t) toMove;
         writefd(fdW, &toMoveBig, sizeof(toMoveBig));
     }
+
 }
