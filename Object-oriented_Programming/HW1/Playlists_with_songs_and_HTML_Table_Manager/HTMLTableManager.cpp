@@ -192,7 +192,7 @@ class Table
 	unsigned short rowsCount = 0;
 	bool isValidTable = false;
 
-	const char* readNextTag(std::ifstream& file) const
+	void readNextTag(std::ifstream& file, char* buff, int maxBuffSize) const
 	{
 		while (true)
 		{
@@ -204,24 +204,24 @@ class Table
 			}
 			if (!file.good())
 			{
-				return ERROR_TAG;
+				strcpy(buff, ERROR_TAG);
+				return;
 			}
 			if (symbol != '<')
 			{
 				continue;
 			}
-			char buff[MAX_TAG_LEN];
-			file.getline(buff, MAX_TAG_LEN, '>');
-			return buff;
+			file.getline(buff, maxBuffSize, '>');
+			return;
 		}
-
 	}
+
 	void loadTable(std::ifstream& file)
 	{
 		while (true)
 		{
 			char tag[MAX_TAG_LEN];
-			strcpy(tag, readNextTag(file));
+			readNextTag(file, tag, MAX_TAG_LEN);
 			if (!strcmp(tag, ROW_TAG))
 			{
 				rowsCount++;
